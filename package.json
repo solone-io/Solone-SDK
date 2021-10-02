@@ -1,12 +1,25 @@
 {
   "name": "solone-sdk",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "javascript sdk for solona",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "solana",
+    "solana-sdk",
+    "solana-web3",
+    "blockchain",
+    "sdk",
+    "solone",
+    "dapp",
+    "ethereum",
+    "web3",
+    "solana-development",
+    "api",
+    "@solana/web3.js"
+  ],
   "author": "aqadir64",
   "license": "ISC",
   "dependencies": {
