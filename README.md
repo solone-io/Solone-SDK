@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="https://moralis.io">
-    <img height="200px" src="https://user-images.githubusercontent.com/38910854/135720585-b32e2371-4866-402d-999f-13984fa13716.png" class="attachment-full size-full" alt="Moralis Build Serverless web3 apps" loading="lazy" /></a>
+    <a href="https://solone.io">
+    <img height="200px" src="https://user-images.githubusercontent.com/38910854/135720585-b32e2371-4866-402d-999f-13984fa13716.png" class="attachment-full size-full" alt="Solone Build Serverless web3 apps" loading="lazy" /></a>
 </p>
 
 <h2 align="center">The Ultimate JavaScript SDK for Solona Web3 Development</h2>
