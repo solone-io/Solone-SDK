@@ -25,7 +25,6 @@ export class Solone {
     this.connection = new Connection(clusterApiUrl(network), 'confirmed');
     this.network = network;
   }
-
   switchNetwork = (network: Cluster): void => {
     try {
       this.connection = new Connection(clusterApiUrl(network), 'confirmed');
@@ -98,7 +97,7 @@ export class Solone {
     }
   };
 
-  fundAccount = async (address: string, amount?: number): Promise<string> => {
+  fundAccount = async (address: string | PublicKeyType, amount?: number): Promise<string> => {
     try {
       const publicKey = new PublicKey(address);
       const hash = await this.connection.requestAirdrop(publicKey, amount || LAMPORTS_PER_SOL);

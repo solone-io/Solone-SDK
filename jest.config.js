@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   collectCoverageFrom: ['src/**/*.ts', '!src/index.ts'],
   coverageThreshold: {
     global: {

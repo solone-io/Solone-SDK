@@ -11,7 +11,7 @@
     "build": "npm-run-all clean build:js",
     "test": "jest",
     "test:clear-cache": "jest --clearCache",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "jest --coverage --watchAll=false || exit 0",
     "coverage": "npm-run-all test:*",
     "lint": "eslint 'src/**/*.ts' --fix",
     "docs:build": "typedoc",
@@ -48,8 +48,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run pre-commit",
-      "pre-push": "npm run coverage"
+      "pre-commit": "npm run pre-commit"
     }
   },
   "repository": "https://github.com/solone-io/Solone-SDK.git",
