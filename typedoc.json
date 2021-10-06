@@ -2,6 +2,6 @@
   "entryPoints": ["./src"],
   "out": "docs",
   "exclude": ["**/*+(index|.test).ts"],
-  "name": "Base converter",
+  "name": "Solone SDK",
   "includeVersion": true
 }
