@@ -15,19 +15,31 @@ The Solone SDK is currently is on initial development and testing phase. We will
 
 The easiest way to integrate the Solone SDK into your JavaScript project is through the [npm module](https://www.npmjs.com/package/solone-sdk).
 
-### Using Solone on Different Platforms
+## Usage
 
-To use the npm modules for a browser based application, include it as you normally would:
+### Initialize
 
-```js
-const {solone} = require('solone-sdk');
-// ES6
+```javascript
 import { solone } from 'solone-sdk';
+
+const solone = new Solone('testnet'); // network could be mainnet-beta, testnet or devnet
 ```
 
-For server-side applications or Node.js command line tools, include:
+### API
 
-```js
-// In a node.js environment
-const {solone} = require('solone-sdk');
+**`switchNetwork(network: Cluster)`**
+
+to switch the current initialized network of solana eg: from testnet to mainnet-beta.
+
+```javascript
+solone.switchNetwork('testnet'); // switch network to solana testnet
+solone.switchNetwork('mainnet-beta'); // switch network to solana mainnet-beta
+solone.switchNetwork('devnet'); // switch network to solana devnet
 ```
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
