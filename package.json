@@ -1,11 +1,61 @@
 {
   "name": "solone-sdk",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "javascript sdk for solona",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "check-types": "tsc --noEmit",
+    "clean": "rimraf build",
+    "build:js": "tsc",
+    "build": "npm-run-all clean build:js",
+    "test": "jest",
+    "test:clear-cache": "jest --clearCache",
+    "test:coverage": "jest --coverage --watchAll=false || exit 0",
+    "coverage": "npm-run-all test:*",
+    "lint": "eslint 'src/**/*.ts' --fix",
+    "docs:build": "typedoc",
+    "docs:serve": "serve docs",
+    "serve-docs": "npm-run-all docs:*",
+    "pre-commit": "npm-run-all check-types lint"
   },
+  "author": "aqadir64",
+  "license": "ISC",
+  "dependencies": {
+    "@solana/web3.js": "^1.29.0",
+    "borsh": "^0.6.0",
+    "typescript": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.19",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^4.3.8",
+    "jest": "^26.6.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.4.1",
+    "rimraf": "^3.0.2",
+    "serve": "^11.3.2",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
+    "typedoc": "^0.22.5"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pre-commit"
+    }
+  },
+  "repository": "https://github.com/solone-io/Solone-SDK.git",
+  "bugs": {
+    "url": "https://github.com/solone-io/Solone-SDK/issues"
+  },
+  "homepage": "https://github.com/solone-io/Solone-SDK#readme",
   "keywords": [
     "solana",
     "solana-sdk",
@@ -19,21 +69,5 @@
     "solana-development",
     "api",
     "@solana/web3.js"
-  ],
-  "author": "aqadir64",
-  "license": "ISC",
-  "dependencies": {
-    "@solana/web3.js": "^1.29.0",
-    "borsh": "^0.6.0",
-    "typescript": "^4.4.3"
-  },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/solone-io/Solone-SDK.git"
-  },
-  "bugs": {
-    "url": "https://github.com/solone-io/Solone-SDK/issues"
-  },
-  "homepage": "https://github.com/solone-io/Solone-SDK#readme"
+  ]
 }
