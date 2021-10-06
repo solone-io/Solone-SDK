@@ -23,4 +23,3 @@ jobs:
         run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-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
