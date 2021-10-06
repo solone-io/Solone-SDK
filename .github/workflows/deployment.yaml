@@ -2,7 +2,7 @@ name: Deployment to NPM registry
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   deployment:
     runs-on: ubuntu-20.04
