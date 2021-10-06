@@ -37,6 +37,25 @@ solone.switchNetwork('mainnet-beta'); // switch network to solana mainnet-beta
 solone.switchNetwork('devnet'); // switch network to solana devnet
 ```
 
+**`createAccount(secret?: Unint8Array | string)`**
+
+create a new wallet or wallet using a secret key.
+
+```javascript
+solone.createAccount(); // create new random account
+solone.createAccount(secretKey); // create account using secretKey, Can be either in string or uinit8Array.
+```
+
+
+**`getAccountBalance(address: string | PublicKeyType)`**
+
+get wallet balance using base58 or string public key of wallet.
+
+```javascript
+solone.getAccountBalance(stringPublicKey); // get balance using string format public key
+solone.getAccountBalance(publicKey); // get balance using using base58 format public key
+```
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
