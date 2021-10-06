@@ -55,10 +55,9 @@ describe('solone()', () => {
       console.log({ account: newBalance });
     });
     test('airdrop 5000 lamports to account', async () => {
-      const oldBalance = await solone.getAccountBalance(account.stringPublicKey);
       await solone.fundAccount(account.stringPublicKey, 5000);
       const newBalance = await solone.getAccountBalance(account.stringPublicKey);
-      console.log({ account: newBalance - oldBalance });
+      console.log({ account: newBalance });
     });
   });
 });
