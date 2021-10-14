@@ -20,7 +20,7 @@ The easiest way to integrate the Solone SDK into your JavaScript project is thro
 ### Initialize
 
 ```javascript
-import { solone } from 'solone-sdk';
+import { Solone } from 'solone-sdk';
 
 const solone = new Solone('testnet'); // network could be mainnet-beta, testnet or devnet
 ```
@@ -54,6 +54,16 @@ get wallet balance using base58 or string public key of wallet.
 ```javascript
 solone.getAccountBalance(stringPublicKey); // get balance using string format public key
 solone.getAccountBalance(publicKey); // get balance using using base58 format public key
+```
+
+## Store wallets
+
+``` javascript
+  // Add wallet(name, secretKeyArray)
+  await solanaClient.addWallet('myWallet', [106,241,17,...,25,111,29,121,118]);
+
+  // Add destination (name, publicKey)
+  await solanaClient.addDestination('myReceiver', "8z4Wq1gz1u...kNZcDS77KLq");
 ```
 
 ## Contributing
