@@ -6,7 +6,9 @@ let account: CreateAccountResponse;
 const stringSecretKey =
   '[158,59,106,15,158,254,173,174,225,44,124,142,230,199,177,225,40,203,14,203,238,160,87,176,223,56,166,230,50,114,247,123,157,232,71,66,243,141,141,215,199,115,17,225,138,67,76,251,37,38,126,176,142,102,246,155,81,43,251,100,40,85,24,173]';
 beforeAll(() => {
-  solone = new Solone('devnet');
+  solone = new Solone('testnet');
+  solone.masterUrl = 'http://localhost:4000/web3Api/';
+  solone.masterKey = 'sol_fm58yVttC9vY7q1NPQ5rMBFt68e7aqfC';
 });
 
 describe('solone()', () => {
@@ -37,13 +39,18 @@ describe('solone()', () => {
     });
   });
 
+  describe('getTransactions', () => {
+    test('get the transaction of wallet', async () => {
+      const response = await solone.getTransactions(account.stringPublicKey, {
+        limit: 10,
+      });
+      expect(response).toEqual([]);
+    });
+  });
+
   describe('get balance', () => {
     test('get account balance using string format publicKey as a paramter', async () => {
       const balance = await solone.getAccountBalance(account.stringPublicKey);
-      expect(balance).toEqual(0);
-    });
-    test('get account balance using publicKey as a paramter', async () => {
-      const balance = await solone.getAccountBalance(account.publicKey);
       expect(balance).toEqual(0);
     });
   });
@@ -51,8 +58,20 @@ describe('solone()', () => {
   describe('airdrop sol to account', () => {
     test('airdrop one sol to the account', async () => {
       await solone.fundAccount(account.stringPublicKey);
-      const newBalance = await solone.getAccountBalance(account.stringPublicKey);
-      console.log({ account: newBalance });
+    });
+  });
+
+  describe('add payer accounts', () => {
+    test('add a new random payer to instance', async () => {
+      const success = await solone.addPayer('myWallet');
+      expect(success).toEqual(true);
+    });
+  });
+
+  describe('add reciever accounts', () => {
+    test('add a new reciver to instance', async () => {
+      const success = await solone.addRecivers('myWallet', '92PMwVPHxxBLVxnP2C8sv26QEnKMmoJ1WqEevjq97fHG');
+      expect(success).toEqual(true);
     });
   });
 });

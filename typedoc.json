@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["./src"],
+  "entryPoints": ["./src/solone.js"],
   "out": "docs",
   "exclude": ["**/*+(index|.test).ts"],
   "name": "Solone SDK",

@@ -20,7 +20,7 @@ The easiest way to integrate the Solone SDK into your JavaScript project is thro
 ### Initialize
 
 ```javascript
-import { solone } from 'solone-sdk';
+import { Solone } from 'solone-sdk';
 
 const solone = new Solone('testnet'); // network could be mainnet-beta, testnet or devnet
 ```

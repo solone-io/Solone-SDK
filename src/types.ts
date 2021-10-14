@@ -11,6 +11,19 @@ export type CreateAccountResponse = {
   stringSecretKey: string;
 };
 
+export type payerType = {
+  name: string;
+  publicKey: PublicKey;
+  secretKey: Uint8Array;
+  stringPublicKey: string;
+  stringSecretKey: string;
+};
+
+export type recieverType = {
+  name: string;
+  publicKey: PublicKey;
+};
+
 export type TransactionObject = {
   fees?: number;
   amount?: number;
