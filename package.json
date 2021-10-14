@@ -1,6 +1,6 @@
 {
   "name": "solone-sdk",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "javascript sdk for solona",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
