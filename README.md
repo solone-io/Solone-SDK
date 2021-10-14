@@ -56,6 +56,16 @@ solone.getAccountBalance(stringPublicKey); // get balance using string format pu
 solone.getAccountBalance(publicKey); // get balance using using base58 format public key
 ```
 
+## Store wallets
+
+``` javascript
+  // Add wallet(name, secretKeyArray)
+  await solanaClient.addWallet('myWallet', [106,241,17,...,25,111,29,121,118]);
+
+  // Add destination (name, publicKey)
+  await solanaClient.addDestination('myReceiver', "8z4Wq1gz1u...kNZcDS77KLq");
+```
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
