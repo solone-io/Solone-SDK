@@ -51,6 +51,14 @@ export class Solone {
    * @param {string} network network to connect
    */
 
+  switchRpcUrl = (url: string): void => {
+    try {
+      this.connection = new Connection(url, 'confirmed');
+    } catch (error) {
+      throw error;
+    }
+  };
+
   switchNetwork = (network: Cluster): void => {
     try {
       this.connection = new Connection(clusterApiUrl(network), 'confirmed');

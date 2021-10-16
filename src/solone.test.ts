@@ -7,8 +7,8 @@ const stringSecretKey =
   '[158,59,106,15,158,254,173,174,225,44,124,142,230,199,177,225,40,203,14,203,238,160,87,176,223,56,166,230,50,114,247,123,157,232,71,66,243,141,141,215,199,115,17,225,138,67,76,251,37,38,126,176,142,102,246,155,81,43,251,100,40,85,24,173]';
 beforeAll(() => {
   solone = new Solone('testnet');
-  solone.masterUrl = 'http://localhost:4000/web3Api/';
-  solone.masterKey = 'sol_fm58yVttC9vY7q1NPQ5rMBFt68e7aqfC';
+  solone.masterUrl = 'https://api.solone.io/web3Api/';
+  solone.masterKey = 'sol_KfjT5uq88nYjxh5Gktd4I9XfFjioPOFt';
 });
 
 describe('solone()', () => {
