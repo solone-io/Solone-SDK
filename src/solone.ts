@@ -1,4 +1,5 @@
 import {
+  ConfirmedSignaturesForAddress2Options,
   Connection as ConnectionType,
   Keypair as KeypairType,
   PublicKey as PublicKeyType,
@@ -15,16 +16,49 @@ import {
   Transaction,
   sendAndConfirmTransaction,
 } from '@solana/web3.js';
-import { CreateAccountResponse, TransactionObject, Cluster } from './types';
+import axios, { AxiosRequestConfig } from 'axios';
+import { TransactionObject, Cluster, payerType, recieverType, CreateAccountResponse } from './types';
 
 export class Solone {
   private DECIMAL_OFFSET: number = 10 ** 9;
   public connection: ConnectionType;
   public network = 'testnet';
-  constructor(network: Cluster) {
+  public payers: {
+    [key: string]: payerType;
+  };
+  public recievers: {
+    [key: string]: recieverType;
+  };
+  public masterUrl: string;
+  public masterKey: string;
+
+  /**
+   * Create a new Solana Object
+   * @param {string} network network to connect
+   */
+
+  constructor(network: Cluster, masterUrl?: string, masterKey?: string) {
     this.connection = new Connection(clusterApiUrl(network), 'confirmed');
     this.network = network;
+    this.payers = {};
+    this.recievers = {};
+    this.masterUrl = masterUrl || ' ';
+    this.masterKey = masterKey || ' ';
   }
+
+  /**
+   * Create a new Solana Object
+   * @param {string} network network to connect
+   */
+
+  switchRpcUrl = (url: string): void => {
+    try {
+      this.connection = new Connection(url, 'confirmed');
+    } catch (error) {
+      throw error;
+    }
+  };
+
   switchNetwork = (network: Cluster): void => {
     try {
       this.connection = new Connection(clusterApiUrl(network), 'confirmed');
@@ -35,9 +69,14 @@ export class Solone {
 
   getAccountBalance = async (address: string | PublicKeyType): Promise<number> => {
     try {
-      const publicKey = new PublicKey(address);
-      const balance = await this.connection.getBalance(publicKey);
-      return balance / this.DECIMAL_OFFSET;
+      await this.apiCall('updateInstanceQuota');
+      const balance = await this.apiCall('getAccountBalance', {
+        data: {
+          publicKey: address,
+        },
+      });
+      console.log({ balance });
+      return balance;
     } catch (error) {
       throw error;
     }
@@ -64,33 +103,17 @@ export class Solone {
     }
   };
 
-  getTransactions = async (address: string): Promise<Array<TransactionObject>> => {
+  getTransactions = async (
+    address: string,
+    options: ConfirmedSignaturesForAddress2Options,
+  ): Promise<Array<TransactionObject>> => {
     try {
-      const publicKey = new PublicKey(address);
-
-      const transSignatures = await this.connection.getConfirmedSignaturesForAddress2(publicKey, {
-        limit: 10,
+      const transactions = await this.apiCall('getAccountTransactions', {
+        data: {
+          publicKey: address,
+          options,
+        },
       });
-      const transactions = [];
-      for (let i = 0; i < transSignatures.length; i++) {
-        const signature = transSignatures[i].signature;
-        const confirmedTransaction = await this.connection.getConfirmedTransaction(signature);
-        if (confirmedTransaction) {
-          const { meta } = confirmedTransaction;
-          if (meta) {
-            const oldBalance = meta.preBalances;
-            const newBalance = meta.postBalances;
-            const amount = oldBalance[0] - newBalance[0];
-            const transWithSignature = {
-              signature,
-              ...confirmedTransaction,
-              fees: meta?.fee,
-              amount,
-            };
-            transactions.push(transWithSignature);
-          }
-        }
-      }
       return transactions;
     } catch (error) {
       throw error;
@@ -99,11 +122,53 @@ export class Solone {
 
   fundAccount = async (address: string | PublicKeyType, amount?: number): Promise<string> => {
     try {
+      await this.apiCall('updateInstanceQuota');
       const publicKey = new PublicKey(address);
       const hash = await this.connection.requestAirdrop(publicKey, amount || LAMPORTS_PER_SOL);
       return hash;
     } catch (error) {
       throw error;
+    }
+  };
+
+  addPayer = async (name: string, secretKey?: Uint8Array | string): Promise<boolean> => {
+    try {
+      const wallet = await this.createAccount(secretKey);
+      this.payers[name] = {
+        name,
+        ...wallet,
+      };
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  getPayerWithName = (name: string): payerType | string => {
+    try {
+      return this.payers[name] ? this.payers[name] : 'NO WALELT NAME';
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  getRecieverWithName = (name: string): recieverType | string => {
+    try {
+      return this.recievers[name] ? this.recievers[name] : 'NO RECIEVER NAME';
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  addRecivers = async (name: string, address: string | PublicKeyType): Promise<boolean> => {
+    try {
+      this.recievers[name] = {
+        name,
+        publicKey: new PublicKey(address),
+      };
+      return true;
+    } catch (error) {
+      return false;
     }
   };
 
@@ -131,5 +196,26 @@ export class Solone {
     const hash = await sendAndConfirmTransaction(this.connection, transaction, signers);
 
     return hash;
+  };
+
+  private apiCall = async (name: string, options?: AxiosRequestConfig): Promise<any> => {
+    if (!this.masterUrl) {
+      throw new Error('masterUrl is not initialized , initialized masterUrl first');
+    }
+    try {
+      const http = axios.create({ baseURL: this.masterUrl });
+      const response = await http.post(`${name}`, options, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          network: this.network,
+          Authorization: `Bearer ${this.masterKey}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log({ error });
+      throw error;
+    }
   };
 }
