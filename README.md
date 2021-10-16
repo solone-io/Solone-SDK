@@ -23,6 +23,9 @@ The easiest way to integrate the Solone SDK into your JavaScript project is thro
 import { Solone } from 'solone-sdk';
 
 const solone = new Solone('testnet'); // network could be mainnet-beta, testnet or devnet
+solone.masterUrl = 'https://api.solone.io/web3Api/';
+solone.masterKey = 'sol_fm58yVjjC9vY7q1NPQ5rMBFt68e7aqfC';
+
 ```
 
 ### API
