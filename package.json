@@ -22,8 +22,8 @@
   "author": "aqadir64",
   "license": "ISC",
   "dependencies": {
-    "@solana/web3.js": "^1.29.0",
-    "axios": "^0.22.0",
+    "@solana/web3.js": "^1.95.1",
+    "axios": "^1.6.8",
     "borsh": "^0.6.0",
     "typescript": "^4.4.3"
   },
